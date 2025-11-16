@@ -2,119 +2,95 @@
 
 import { Suspense } from 'react';
 import Link from 'next/link';
-import { ArrowRight, Code, Cpu, ShoppingCart, Share2, Zap, Shield, TrendingUp, Users, CheckCircle } from 'lucide-react';
-import dynamic from 'next/dynamic';
-
-const Scene3D = dynamic(() => import('@/components/3d/Scene3D'), { ssr: false });
-const ParticleField = dynamic(() => import('@/components/3d/ParticleField'), { ssr: false });
+import { ArrowRight, Code, Cpu, ShoppingCart, Share2, Sparkles } from 'lucide-react';
 
 const services = [
   {
     icon: Code,
     title: 'Web Development',
-    description: 'Custom websites and web applications built with cutting-edge technologies for maximum performance and scalability.',
+    description: 'Custom websites and applications built with cutting-edge technologies.',
     href: '/services/web-development',
-    features: ['Responsive Design', 'Fast Performance', 'SEO Optimized'],
   },
   {
     icon: ShoppingCart,
     title: 'POS Systems',
-    description: 'Advanced point-of-sale solutions that streamline operations and enhance customer experience.',
+    description: 'Advanced point-of-sale solutions that streamline operations.',
     href: '/services/pos-systems',
-    features: ['Cloud-Based', 'Real-time Analytics', 'Multi-location'],
   },
   {
     icon: Cpu,
     title: 'AI Solutions',
-    description: 'Intelligent automation and AI-powered tools to transform your business operations and decision-making.',
+    description: 'Intelligent automation and AI-powered tools for your business.',
     href: '/services/ai-solutions',
-    features: ['Machine Learning', 'Automation', 'Predictive Analytics'],
   },
   {
     icon: Share2,
-    title: 'Social Media Management',
-    description: 'Comprehensive social media strategies that build your brand and engage your audience.',
+    title: 'Social Media',
+    description: 'Comprehensive strategies that build your brand and audience.',
     href: '/services/social-media',
-    features: ['Content Strategy', 'Analytics', 'Community Management'],
   },
 ];
 
 const stats = [
-  { label: 'Projects Completed', value: '500+' },
-  { label: 'Happy Clients', value: '250+' },
-  { label: 'Team Members', value: '50+' },
-  { label: 'Countries Served', value: '30+' },
+  { value: '500+', label: 'Projects' },
+  { value: '250+', label: 'Clients' },
+  { value: '98%', label: 'Satisfaction' },
+  { value: '30+', label: 'Countries' },
 ];
 
-const benefits = [
-  {
-    icon: Zap,
-    title: 'Lightning Fast',
-    description: 'Optimized for speed and performance across all devices and platforms.',
-  },
-  {
-    icon: Shield,
-    title: 'Secure & Reliable',
-    description: 'Enterprise-grade security measures to protect your data and users.',
-  },
-  {
-    icon: TrendingUp,
-    title: 'Scalable Solutions',
-    description: 'Built to grow with your business, from startup to enterprise.',
-  },
-  {
-    icon: Users,
-    title: 'Expert Team',
-    description: 'Dedicated professionals committed to your success.',
-  },
+const projects = [
+  { title: 'E-commerce Platform', category: 'Web Development', color: 'bg-blue-50' },
+  { title: 'AI Analytics Dashboard', category: 'AI Solutions', color: 'bg-purple-50' },
+  { title: 'Restaurant POS System', category: 'POS Systems', color: 'bg-green-50' },
+  { title: 'Social Media Campaign', category: 'Marketing', color: 'bg-pink-50' },
 ];
 
 export default function HomePage() {
   return (
-    <div className="relative overflow-hidden">
+    <div className="relative overflow-hidden bg-white">
       {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center justify-center">
-        <div className="absolute inset-0 grid-background" />
-        <Suspense fallback={<div className="w-full h-full" />}>
-          <Scene3D />
-        </Suspense>
+      <section className="relative pt-32 pb-20 lg:pt-40 lg:pb-32">
+        <div className="section-container">
+          <div className="max-w-4xl mx-auto text-center">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gray-100 mb-8 animate-fade-in">
+              <Sparkles size={16} className="text-gray-700" />
+              <span className="text-sm font-medium text-gray-700">Digital Agency</span>
+            </div>
 
-        <div className="relative section-container text-center z-10 pt-20">
-          <div className="max-w-5xl mx-auto space-y-8 animate-fade-in">
-            <h1 className="heading-xl gradient-text">
-              Transform Your Business<br />With Premium Digital Solutions
+            <h1 className="heading-xl mb-6 animate-slide-up">
+              We Create Digital<br />
+              Experiences That <span className="gradient-text">Matter</span>
             </h1>
-            <p className="text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
-              We craft exceptional digital experiences that drive growth, innovation, and success.
-              From web development to AI solutions, we&apos;re your partner in digital excellence.
+
+            <p className="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto mb-10 leading-relaxed animate-slide-up" style={{animationDelay: '100ms'}}>
+              A creative agency specializing in web development, AI solutions, and digital transformation for forward-thinking businesses.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center pt-8">
+
+            <div className="flex flex-col sm:flex-row gap-4 justify-center animate-slide-up" style={{animationDelay: '200ms'}}>
               <Link href="/contact" className="btn-primary inline-flex items-center justify-center gap-2">
-                Start Your Project
-                <ArrowRight size={20} />
+                Start a Project
+                <ArrowRight size={18} />
               </Link>
-              <Link href="/services" className="btn-secondary inline-flex items-center justify-center gap-2">
-                Explore Services
+              <Link href="/portfolio" className="btn-secondary inline-flex items-center justify-center gap-2">
+                View Our Work
               </Link>
             </div>
           </div>
         </div>
 
-        <div className="absolute bottom-10 left-1/2 -translate-x-1/2 animate-bounce">
-          <div className="w-6 h-10 border-2 border-white/30 rounded-full flex items-start justify-center p-2">
-            <div className="w-1 h-3 bg-white/60 rounded-full" />
-          </div>
-        </div>
+        {/* Decorative Elements */}
+        <div className="absolute top-40 right-10 w-72 h-72 bg-blue-100 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-float"></div>
+        <div className="absolute bottom-20 left-10 w-72 h-72 bg-purple-100 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-float" style={{animationDelay: '2s'}}></div>
       </section>
 
       {/* Stats Section */}
-      <section className="section-padding bg-white text-black">
+      <section className="py-16 border-y border-gray-200 bg-gray-50">
         <div className="section-container">
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
             {stats.map((stat, index) => (
               <div key={index} className="text-center">
-                <div className="text-4xl lg:text-6xl font-bold mb-2">{stat.value}</div>
-                <div className="text-gray-600 font-medium">{stat.label}</div>
+                <div className="text-3xl lg:text-5xl font-bold text-gray-900 mb-2">{stat.value}</div>
+                <div className="text-sm text-gray-600 font-medium">{stat.label}</div>
               </div>
             ))}
           </div>
@@ -122,103 +98,98 @@ export default function HomePage() {
       </section>
 
       {/* Services Section */}
-      <section className="section-padding relative">
-        <div className="absolute inset-0 grid-background opacity-50" />
-        <Suspense fallback={<div />}>
-          <ParticleField />
-        </Suspense>
-
-        <div className="section-container relative z-10">
-          <div className="text-center mb-16">
-            <h2 className="heading-lg mb-6">Our Services</h2>
-            <p className="text-xl text-gray-400 max-w-3xl mx-auto">
-              Comprehensive digital solutions tailored to elevate your business to new heights.
+      <section className="section-padding">
+        <div className="section-container">
+          <div className="max-w-3xl mb-16">
+            <h2 className="heading-lg mb-6">What We Do</h2>
+            <p className="text-lg text-gray-600">
+              We offer comprehensive digital solutions tailored to help your business thrive in the modern landscape.
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-8">
+          <div className="grid md:grid-cols-2 gap-6 lg:gap-8">
             {services.map((service, index) => (
               <Link
                 key={index}
                 href={service.href}
-                className="group glass-effect rounded-2xl p-8 hover:bg-white/10 transition-all duration-300 transform hover:scale-105"
+                className="group bg-white border border-gray-200 rounded-2xl p-8 lg:p-10 hover:border-gray-900 transition-all duration-300 card-hover"
               >
-                <div className="flex items-start gap-6">
-                  <div className="p-4 bg-white/10 rounded-xl group-hover:bg-white/20 transition-colors">
-                    <service.icon size={32} className="text-white" />
+                <div className="flex items-start gap-4">
+                  <div className="p-3 bg-gray-100 rounded-xl group-hover:bg-gray-900 group-hover:text-white transition-colors">
+                    <service.icon size={24} />
                   </div>
                   <div className="flex-1">
-                    <h3 className="text-2xl font-bold mb-3 group-hover:text-shadow-glow transition-all">
+                    <h3 className="text-xl font-semibold mb-2 text-gray-900">
                       {service.title}
                     </h3>
-                    <p className="text-gray-400 mb-4 leading-relaxed">
+                    <p className="text-gray-600 mb-4 leading-relaxed">
                       {service.description}
                     </p>
-                    <ul className="space-y-2">
-                      {service.features.map((feature, idx) => (
-                        <li key={idx} className="flex items-center gap-2 text-gray-300">
-                          <CheckCircle size={16} className="text-white/60" />
-                          {feature}
-                        </li>
-                      ))}
-                    </ul>
-                    <div className="mt-6 flex items-center gap-2 text-white font-medium group-hover:gap-4 transition-all">
-                      Learn More
-                      <ArrowRight size={20} className="group-hover:translate-x-2 transition-transform" />
-                    </div>
+                    <span className="inline-flex items-center gap-2 text-sm font-medium text-gray-900 group-hover:gap-3 transition-all">
+                      Learn more
+                      <ArrowRight size={16} />
+                    </span>
                   </div>
                 </div>
               </Link>
             ))}
           </div>
-
-          <div className="text-center mt-12">
-            <Link href="/services" className="btn-primary inline-flex items-center gap-2">
-              View All Services
-              <ArrowRight size={20} />
-            </Link>
-          </div>
         </div>
       </section>
 
-      {/* Benefits Section */}
-      <section className="section-padding bg-white text-black">
+      {/* Featured Projects Section */}
+      <section className="section-padding bg-gray-50">
         <div className="section-container">
-          <div className="text-center mb-16">
-            <h2 className="heading-lg mb-6 text-black">Why Choose Bonjour?</h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              We deliver excellence through innovation, expertise, and dedication to your success.
-            </p>
+          <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between mb-12">
+            <div className="max-w-2xl mb-8 lg:mb-0">
+              <h2 className="heading-lg mb-4">Featured Work</h2>
+              <p className="text-lg text-gray-600">
+                A selection of projects that showcase our expertise and creativity.
+              </p>
+            </div>
+            <Link href="/portfolio" className="btn-secondary inline-flex items-center gap-2 self-start">
+              View All Projects
+              <ArrowRight size={18} />
+            </Link>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {benefits.map((benefit, index) => (
-              <div key={index} className="text-center">
-                <div className="inline-flex p-4 bg-black text-white rounded-xl mb-4">
-                  <benefit.icon size={32} />
+          <div className="grid md:grid-cols-2 gap-6">
+            {projects.map((project, index) => (
+              <Link
+                key={index}
+                href="/portfolio"
+                className="group block bg-white rounded-2xl overflow-hidden border border-gray-200 hover:border-gray-900 transition-all duration-300 card-hover"
+              >
+                <div className={`${project.color} h-64 flex items-center justify-center`}>
+                  <span className="text-6xl font-bold text-gray-300">
+                    {index + 1}
+                  </span>
                 </div>
-                <h3 className="text-xl font-bold mb-3">{benefit.title}</h3>
-                <p className="text-gray-600">{benefit.description}</p>
-              </div>
+                <div className="p-6">
+                  <div className="text-sm text-gray-500 mb-2">{project.category}</div>
+                  <h3 className="text-xl font-semibold text-gray-900">{project.title}</h3>
+                </div>
+              </Link>
             ))}
           </div>
         </div>
       </section>
 
       {/* CTA Section */}
-      <section className="section-padding relative">
-        <div className="absolute inset-0 bg-gradient-to-b from-black via-gray-900 to-black" />
-
-        <div className="section-container relative z-10 text-center">
-          <div className="max-w-4xl mx-auto glass-effect rounded-3xl p-12 lg:p-16">
-            <h2 className="heading-lg mb-6">Ready to Transform Your Business?</h2>
-            <p className="text-xl text-gray-300 mb-8 max-w-2xl mx-auto">
-              Let&apos;s collaborate to create something extraordinary. Our team is ready to bring your vision to life.
-            </p>
-            <Link href="/contact" className="btn-primary inline-flex items-center gap-2">
-              Get Started Today
-              <ArrowRight size={20} />
-            </Link>
+      <section className="section-padding">
+        <div className="section-container">
+          <div className="max-w-4xl mx-auto text-center bg-gray-900 rounded-3xl p-12 lg:p-16 text-white relative overflow-hidden">
+            <div className="absolute top-0 right-0 w-96 h-96 bg-blue-500 rounded-full mix-blend-soft-light filter blur-3xl opacity-20"></div>
+            <div className="relative z-10">
+              <h2 className="heading-lg mb-6">Ready to Start Your Project?</h2>
+              <p className="text-lg text-gray-300 mb-8 max-w-2xl mx-auto">
+                Let's collaborate to create something extraordinary. Get in touch with our team today.
+              </p>
+              <Link href="/contact" className="inline-flex items-center gap-2 px-8 py-4 bg-white text-gray-900 font-medium rounded-lg hover:bg-gray-100 transition-all">
+                Get Started
+                <ArrowRight size={18} />
+              </Link>
+            </div>
           </div>
         </div>
       </section>
