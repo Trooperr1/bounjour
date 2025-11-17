@@ -1,9 +1,10 @@
 'use client';
 
-import { Suspense } from 'react';
+import { Suspense, useState } from 'react';
 import Link from 'next/link';
-import { ArrowRight, ExternalLink, Code, ShoppingCart, Cpu, Share2 } from 'lucide-react';
+import { ArrowRight, Code, ShoppingCart, Cpu, Share2, Sparkles } from 'lucide-react';
 import dynamic from 'next/dynamic';
+import ProjectCard from '@/components/ProjectCard';
 
 const FloatingCube = dynamic(() => import('@/components/3d/FloatingCube'), { ssr: false });
 
@@ -73,86 +74,83 @@ const projects = [
 const categories = ['All', 'Web Development', 'AI Solutions', 'POS Systems', 'Social Media'];
 
 export default function PortfolioPage() {
+  const [activeCategory, setActiveCategory] = useState('All');
+
+  const filteredProjects = activeCategory === 'All'
+    ? projects
+    : projects.filter(project => project.category === activeCategory);
+
   return (
-    <div className="relative overflow-hidden pt-20">
+    <div className="relative overflow-hidden pt-20 bg-black">
       {/* Hero Section */}
       <section className="relative section-padding min-h-[60vh] flex items-center">
-        <div className="absolute inset-0 grid-background" />
+        <div className="absolute inset-0 grid-background opacity-30" />
         <Suspense fallback={<div />}>
-          <FloatingCube />
+          <div className="absolute inset-0 opacity-10">
+            <FloatingCube />
+          </div>
         </Suspense>
 
         <div className="section-container relative z-10 text-center">
-          <h1 className="heading-xl mb-6">
+          <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/5 border border-white/10 rounded-full mb-6 animate-fade-in">
+            <Sparkles size={16} className="text-white" />
+            <span className="text-sm font-medium text-white">Premium Portfolio</span>
+          </div>
+
+          <h1 className="heading-xl mb-6 text-white">
             Our Work Speaks<br />
-            <span className="gradient-text">For Itself</span>
+            <span className="gradient-text text-shadow-glow">For Itself</span>
           </h1>
-          <p className="text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
+          <p className="text-xl text-gray-400 max-w-3xl mx-auto leading-relaxed">
             Explore our portfolio of successful projects that have transformed businesses
             and delivered exceptional results across industries.
           </p>
         </div>
       </section>
 
+      {/* Filter Section */}
+      <section className="pb-12">
+        <div className="section-container">
+          <div className="flex flex-wrap justify-center gap-3">
+            {categories.map((category) => (
+              <button
+                key={category}
+                onClick={() => setActiveCategory(category)}
+                className={`px-6 py-3 rounded-full font-medium transition-all duration-300 ${
+                  activeCategory === category
+                    ? 'bg-white text-black scale-105'
+                    : 'bg-white/5 text-white border border-white/10 hover:bg-white/10 hover:border-white/20'
+                }`}
+              >
+                {category}
+                {activeCategory === category && (
+                  <span className="ml-2 px-2 py-0.5 bg-black/20 rounded-full text-xs">
+                    {category === 'All' ? projects.length : projects.filter(p => p.category === category).length}
+                  </span>
+                )}
+              </button>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Portfolio Grid */}
       <section className="section-padding">
         <div className="section-container">
-          <div className="space-y-16">
-            {projects.map((project, index) => (
-              <div
-                key={index}
-                className="glass-effect rounded-2xl overflow-hidden hover:bg-white/10 transition-all duration-300"
-              >
-                <div className="grid lg:grid-cols-2 gap-8">
-                  {/* Project Info */}
-                  <div className="p-8 lg:p-12">
-                    <div className="flex items-center gap-3 mb-4">
-                      <div className="p-2 bg-white/10 rounded-lg">
-                        <project.icon size={24} />
-                      </div>
-                      <span className="text-sm font-medium text-gray-400">{project.category}</span>
-                    </div>
-
-                    <h2 className="heading-sm mb-3">{project.title}</h2>
-                    <p className="text-gray-500 mb-4">{project.client}</p>
-                    <p className="text-gray-300 mb-6 leading-relaxed">{project.description}</p>
-
-                    <div className="mb-6">
-                      <h3 className="font-semibold mb-3">Key Results:</h3>
-                      <ul className="space-y-2">
-                        {project.results.map((result, idx) => (
-                          <li key={idx} className="flex items-start gap-2">
-                            <ArrowRight size={20} className="text-white/60 flex-shrink-0 mt-0.5" />
-                            <span className="text-gray-300">{result}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-
-                    <div className="mb-6">
-                      <h3 className="font-semibold mb-3">Technologies:</h3>
-                      <div className="flex flex-wrap gap-2">
-                        {project.technologies.map((tech, idx) => (
-                          <span
-                            key={idx}
-                            className="px-3 py-1 bg-white/5 border border-white/10 rounded-full text-sm"
-                          >
-                            {tech}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Project Visual */}
-                  <div className="bg-gradient-to-br from-white/5 to-white/0 p-8 lg:p-12 flex items-center justify-center">
-                    <div className="w-full aspect-square rounded-xl bg-white/5 border border-white/10 flex items-center justify-center">
-                      <project.icon size={120} className="text-white/20" />
-                    </div>
-                  </div>
-                </div>
+          <div className="space-y-12">
+            {filteredProjects.length > 0 ? (
+              filteredProjects.map((project, index) => (
+                <ProjectCard
+                  key={index}
+                  {...project}
+                  index={index}
+                />
+              ))
+            ) : (
+              <div className="text-center py-20">
+                <p className="text-gray-400 text-lg">No projects found in this category.</p>
               </div>
-            ))}
+            )}
           </div>
         </div>
       </section>
@@ -162,23 +160,34 @@ export default function PortfolioPage() {
         <div className="section-container">
           <div className="text-center mb-12">
             <h2 className="heading-lg mb-6">Portfolio By Numbers</h2>
+            <p className="text-gray-600 text-lg max-w-2xl mx-auto">
+              Our track record speaks for itself. Here&apos;s what we&apos;ve accomplished for our clients.
+            </p>
           </div>
 
-          <div className="grid md:grid-cols-4 gap-8 text-center">
-            <div>
-              <div className="text-5xl font-bold mb-2">500+</div>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+            <div className="group">
+              <div className="text-5xl md:text-6xl font-bold mb-2 transition-transform duration-300 group-hover:scale-110">
+                500+
+              </div>
               <div className="text-gray-600 font-medium">Projects Completed</div>
             </div>
-            <div>
-              <div className="text-5xl font-bold mb-2">98%</div>
+            <div className="group">
+              <div className="text-5xl md:text-6xl font-bold mb-2 transition-transform duration-300 group-hover:scale-110">
+                98%
+              </div>
               <div className="text-gray-600 font-medium">Client Satisfaction</div>
             </div>
-            <div>
-              <div className="text-5xl font-bold mb-2">30+</div>
+            <div className="group">
+              <div className="text-5xl md:text-6xl font-bold mb-2 transition-transform duration-300 group-hover:scale-110">
+                30+
+              </div>
               <div className="text-gray-600 font-medium">Industries Served</div>
             </div>
-            <div>
-              <div className="text-5xl font-bold mb-2">$50M+</div>
+            <div className="group">
+              <div className="text-5xl md:text-6xl font-bold mb-2 transition-transform duration-300 group-hover:scale-110">
+                $50M+
+              </div>
               <div className="text-gray-600 font-medium">Client Revenue Generated</div>
             </div>
           </div>
@@ -186,17 +195,26 @@ export default function PortfolioPage() {
       </section>
 
       {/* CTA Section */}
-      <section className="section-padding">
+      <section className="section-padding bg-black">
         <div className="section-container">
-          <div className="glass-effect rounded-3xl p-12 lg:p-16 text-center">
-            <h2 className="heading-lg mb-6">Your Project Could Be Next</h2>
-            <p className="text-xl text-gray-300 mb-8 max-w-2xl mx-auto">
-              Let&apos;s create something amazing together. Start your project today.
-            </p>
-            <Link href="/contact" className="btn-primary inline-flex items-center gap-2">
-              Start Your Project
-              <ArrowRight size={20} />
-            </Link>
+          <div className="glass-effect rounded-3xl p-12 lg:p-16 text-center relative overflow-hidden">
+            <div className="absolute inset-0 grid-background opacity-20" />
+
+            <div className="relative z-10">
+              <h2 className="heading-lg mb-6 text-white">Your Project Could Be Next</h2>
+              <p className="text-xl text-gray-300 mb-8 max-w-2xl mx-auto">
+                Let&apos;s create something amazing together. Start your project today.
+              </p>
+              <div className="flex flex-wrap gap-4 justify-center">
+                <Link href="/contact" className="btn-primary inline-flex items-center gap-2">
+                  Start Your Project
+                  <ArrowRight size={20} />
+                </Link>
+                <Link href="/services" className="btn-secondary inline-flex items-center gap-2">
+                  View Our Services
+                </Link>
+              </div>
+            </div>
           </div>
         </div>
       </section>
