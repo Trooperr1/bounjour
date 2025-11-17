@@ -72,10 +72,17 @@ export default function ContactPage() {
   return (
     <div className="relative overflow-hidden pt-20 bg-black">
       {/* Hero Section */}
-      <section className="relative section-padding min-h-[60vh] flex items-center">
-        <div className="absolute inset-0 grid-background opacity-30" />
+      <section className="relative section-padding min-h-[60vh] flex items-center overflow-hidden">
+        {/* Animated Gradient Background */}
+        <div className="absolute inset-0 bg-gradient-to-br from-blue-900/20 via-black to-purple-900/20" />
+        <div className="absolute top-0 left-1/4 w-96 h-96 bg-blue-500/20 rounded-full blur-3xl animate-pulse" />
+        <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-purple-500/20 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '2s' }} />
+
+        {/* Grid Pattern */}
+        <div className="absolute inset-0 grid-background opacity-20" />
+
         <Suspense fallback={<div />}>
-          <div className="absolute inset-0 opacity-10">
+          <div className="absolute inset-0 opacity-15">
             <Scene3D />
           </div>
         </Suspense>
@@ -83,9 +90,9 @@ export default function ContactPage() {
         <div className="section-container relative z-10 text-center">
           <h1 className="heading-xl mb-6 text-white">
             Let&apos;s Build<br />
-            <span className="gradient-text text-shadow-glow">Something Great Together</span>
+            <span className="gradient-text text-shadow-glow bg-gradient-to-r from-white via-blue-200 to-purple-200 bg-clip-text">Something Great Together</span>
           </h1>
-          <p className="text-xl text-gray-400 max-w-3xl mx-auto leading-relaxed">
+          <p className="text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
             Ready to transform your business? Get in touch or book a free consultation call.
           </p>
         </div>
